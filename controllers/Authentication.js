@@ -20,6 +20,7 @@ exports.signup = function(req,res,next){
             next(err);
         }
         if(data){
+
             return res.status(422).send({error: 'Username is in use'});
         }
         else{

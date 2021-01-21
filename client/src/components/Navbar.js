@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { AppBar, Button, IconButton, makeStyles, Toolbar, Typography } from "@material-ui/core";
 
 import SigninModal from './SigninModal';
-
+import * as actions from '../actions';
 
 import MenuIcon from '@material-ui/icons/Menu';
-
+import {connect} from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
    
 }));
 
-const Navbar = () => {
+const Navbar = (props) => {
 
     const classes = useStyles();
     
@@ -36,8 +36,14 @@ const Navbar = () => {
     const handleClose = ()=>{
         setOpen(false);
     }
-
-    
+    const handleSignOut = (e)=>{
+        props.signout((err)=>{
+            if(!err){
+                console.log('successfully signed out!');
+            }
+        });
+    }
+    console.log(props.isLogged);
     return (
 
         <AppBar position="static" className={classes.appBar}>
@@ -48,11 +54,16 @@ const Navbar = () => {
                 <Typography variant="h6" className={classes.title} color="primary">
                     Blogs
                 </Typography>
-                <Button color="primary" onClick={handleSignin} >Login</Button>
+                {(props.isLogged===false)?<Button color="primary" onClick={handleSignin} >Log in</Button>:<Button color="primary" onClick={handleSignOut}>Log out</Button>}
                 <SigninModal openModal={open} closeModal={handleClose}/>
             </Toolbar>
         </AppBar>
     );
 }
+function mapStateToProps(state){
+    return {
+        isLogged: (state.auth.token !== '' && state.auth.token !== null)?true:false
+    }
+}
 
-export default Navbar;
+export default connect(mapStateToProps,actions)(Navbar);
