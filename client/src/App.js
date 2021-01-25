@@ -1,22 +1,13 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import ArticleCard from './components/ArticleCard';
 import Navbar from './components/Navbar';
+import ArticleList from './components/ArticleList';
+import axios from 'axios';
+import { URI } from './config';
 
 const useStyles = makeStyles((theme) => ({
 
-  root: {
-    flexGrow: 1,
-  },
-
-  title: {
-    flexGrow: 1
-  },
   hero: {
     backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.pexels.com/photos/6469/red-hands-woman-creative.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')`,
     height: "500px",
@@ -34,22 +25,19 @@ const useStyles = makeStyles((theme) => ({
   quote: {
     textAlign: "center",
     padding: "5px"
-  },
-  blogsContainer: {
-    paddingTop: theme.spacing(3)
-  },
-  blogTitle: {
-    fontWeight: 800,
-    paddingBottom: theme.spacing(3)
-  },
-
-  media: {
-    height: 240
   }
 }));
 
 const App = () => {
   const classes = useStyles();
+  const [articles, getArticles] = useState([]);
+
+  useEffect(()=>{
+    axios.post(`${URI}/`,null,{headers: {'authorization': localStorage.getItem('token')}})
+      .then(res=>{
+        getArticles(res.data);
+      });
+  },[]);
 
   return (
     <div className="App">
@@ -64,28 +52,7 @@ const App = () => {
       </Box>
 
 
-      <Container maxWidth="lg" className={classes.blogsContainer}>
-
-        <Typography variant="h4" className={classes.blogTitle}>
-          Articles
-        </Typography>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
-            <ArticleCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <ArticleCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <ArticleCard />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <ArticleCard />
-          </Grid>
-        </Grid>
-
-      </Container>
+      <ArticleList data={articles} />
 
     </div>
   );

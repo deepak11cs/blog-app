@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1
     },
@@ -10,31 +10,38 @@ const useStyles = makeStyles((theme)=>({
     },
 }));
 
-export default function ArticleCard() {
-    const classes  = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+const ArticleCard = (props) => {
+    const classes = useStyles();
+
+    const tags = props.data.tag.map(ele => {
+        return (
+            <span>ele</span>
+        )
+    });
+
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Word of the Day
-              </Typography>
+                    {tags}
+                </Typography>
                 <Typography variant="h5" component="h2">
-                    be{bull}nev{bull}o{bull}lent
-              </Typography>
+                    {props.data.title}
+                </Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                    adjective
-              </Typography>
+                    {props.data.author.name}
+                </Typography>
                 <Typography variant="body2" component="p">
-                    well meaning and kindly.
-                <br />
-                    {'"a benevolent smile"'}
+                    {props.data.content}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Learn More</Button>
+                <Button size="small">Read More</Button>
             </CardActions>
         </Card>
     );
 
 }
+
+
+export default ArticleCard;

@@ -7,7 +7,7 @@ const requireAuth = passport.authenticate('jwt',{session: false});
 const Articleapi = require('./controllers/Articleapi');
 
 module.exports = function(app){
-    app.get('/',Articleapi.getAllArticles); 
+    app.post('/',Articleapi.getAllArticles); 
     app.post('/user/:username',requireAuth,Userapi.profile);
     app.post('/publish',requireAuth, Articleapi.publish);
     app.post('/signup',Authentication.signup);
