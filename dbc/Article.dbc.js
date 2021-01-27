@@ -3,15 +3,28 @@ const Article = require('../models/Article');
 exports.addArticle = (req,callback)=>{
     const title = req.body.title;
     const author = req.user._id;
-    const tags = req.body.tags;
+    const tagslist = req.body.tags;
+    console.log(tagslist);
     const content = req.body.content;
+    if(title === undefined || title==='' || title.length <=4){
+        return callback("Title is required (atleast 4 characters)");
+    }
+    if(tagslist.length==0){
+        return callback("Tags can not be empty");
+    }
+    if(content === undefined || content==='' || content.length <=4){
+        return callback("Title is required (atleast 4 characters)");
+    }
+    const preview = content.substring(0,50);
 
     const article = new Article({
         title: title,
         author: author,
-        tags: tags,
-        content: content
+        tags: tagslist,
+        content: content,
+        preview: preview
     });
+    console.log(article);
     article.save((err)=>{
         if(err){
             return callback(err);
@@ -22,7 +35,7 @@ exports.addArticle = (req,callback)=>{
 
 exports.getArticles = function(req,callback){
 
-    Article.find({})
+    Article.find({},{content: 0})
     .populate('author',{name: 1})
     .exec((err,data)=>{
 
@@ -30,9 +43,6 @@ exports.getArticles = function(req,callback){
             return callback(err);
         }
         if(data){
-            if(data.content)
-                data.content = data.content.substring(0,20);
-            console.log(data);
             return callback(null,data);
         }
         else{

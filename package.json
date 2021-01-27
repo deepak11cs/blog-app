@@ -11,6 +11,7 @@
   "author": "Deepak",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
@@ -25,6 +26,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "react-quill": "^1.3.5",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {

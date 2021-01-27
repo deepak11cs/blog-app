@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, makeStyles, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Chip, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,18 +13,19 @@ const useStyles = makeStyles((theme) => ({
 const ArticleCard = (props) => {
     const classes = useStyles();
 
-    const tags = props.data.tag.map(ele => {
+    const tags = props.data.tags.map(ele => {
         return (
-            <span>ele</span>
+            <Chip variant="outlined" color="primary" size="small" label={ele}/>
+            
         )
     });
 
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                <div>
                     {tags}
-                </Typography>
+                </div>
                 <Typography variant="h5" component="h2">
                     {props.data.title}
                 </Typography>
@@ -32,7 +33,7 @@ const ArticleCard = (props) => {
                     {props.data.author.name}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    {props.data.content}
+                    {props.data.preview}
                 </Typography>
             </CardContent>
             <CardActions>

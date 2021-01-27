@@ -38,7 +38,7 @@ exports.signup = function(req,res,next){
                     }
                     return next(err);
                 }
-                res.json({token: tokenForUser(user) });
+                res.json({token: tokenForUser(user) ,username: req.body.name});
             });
         }
     });
@@ -46,6 +46,6 @@ exports.signup = function(req,res,next){
 
 exports.signin = (req,res,next)=>{
     console.log(req); 
-    res.json({token: tokenForUser(req.user)});
+    res.json({token: tokenForUser(req.user), username: req.user.name});
     
 }

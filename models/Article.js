@@ -13,10 +13,15 @@ const articleSchema = new Schema({
         type: Mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    tag: {
-        type: [String]
-    },
+    tags: [{
+        required: true,
+        type: String
+    }],
     content: {
+        type: String,
+        required: true
+    },
+    preview: {
         type: String,
         required: true
     }

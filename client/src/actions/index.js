@@ -10,8 +10,9 @@ export const signup = (props, next) => async dispatch=>{
                 "Access-Control-Allow-Credentials": true,
             }
         });
-        dispatch({type: AUTH_USER, payload: {token: response.data.token}});
+        dispatch({type: AUTH_USER, payload: {token: response.data.token, username: response.data.username}});
         localStorage.setItem('token',response.data.token);
+        localStorage.setItem('username',response.data.username);
         next();
     }
     catch(e){
@@ -21,15 +22,16 @@ export const signup = (props, next) => async dispatch=>{
 
 export const signout = (next)=>async (dispatch)=>{
     localStorage.clear();
-    dispatch({type: AUTH_USER,payload: {token: ''}});
+    dispatch({type: AUTH_USER,payload: {token: '',username: ''}});
     next();
 }
 
 export const signin= (formProps,callback)=>async (dispatch)=>{
     try{
         const response = await axios.post(`${URI}/signin`,formProps);
-        dispatch({type: AUTH_USER, payload: {token: response.data.token}});
+        dispatch({type: AUTH_USER, payload: {token: response.data.token, username: response.data.username}});
         localStorage.setItem('token',response.data.token);
+        localStorage.setItem('username',response.data.username);
         callback();
     }catch(e){
         dispatch({type: AUTH_ERROR, payload: ''})

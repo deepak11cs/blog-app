@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 const store = createStore(
     reducers,
     {
-        auth: { token: localStorage.getItem("token")},
+        auth: { token: localStorage.getItem("token"), username: localStorage.getItem("username")},
 
     },
     applyMiddleware(thunk)

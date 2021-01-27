@@ -8,6 +8,7 @@ import theme from './theme';
 import store from './store';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import UserProfile from './components/UserProfile';
+import PublishArticle from './components/PublishArticle';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <BrowserRouter>
           <Switch>
             <Route path='/user/:name' component={UserProfile}/>
+            <Route path='/publish' component={PublishArticle}/>
             <Route path='/' component={App}/>
           </Switch>
         </BrowserRouter>
