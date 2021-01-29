@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, Chip, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -20,6 +21,7 @@ const ArticleCard = (props) => {
         )
     });
 
+
     return (
         <Card className={classes.card}>
             <CardContent>
@@ -37,7 +39,7 @@ const ArticleCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Read More</Button>
+                <Button size="small"><Link to={`/article/${props.data._id}`}>Read More</Link></Button>
             </CardActions>
         </Card>
     );

@@ -15,7 +15,7 @@ exports.addArticle = (req,callback)=>{
     if(content === undefined || content==='' || content.length <=4){
         return callback("Title is required (atleast 4 characters)");
     }
-    const preview = content.substring(0,50);
+    const preview = content.substring(0,150);
 
     const article = new Article({
         title: title,
@@ -30,6 +30,19 @@ exports.addArticle = (req,callback)=>{
             return callback(err);
         }
         return callback(null, "Successfully published the article");
+    });
+}
+
+exports.getArticle = function(req,callback){
+    Article.findOne({_id: req.params.id})
+    .populate('author',{name: 1})
+    .exec((err,data)=>{
+        if(err)
+            return callback(err);
+        if(data)
+            return callback(null,data);
+        else
+            return callback(null,"incorrect id");
     });
 }
 

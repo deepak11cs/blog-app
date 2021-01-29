@@ -47,6 +47,7 @@ const PublishArticle = (props) => {
             alert('Title, tags and Content are all required fields (min length 4)');
             return ;
         }
+        console.log(text);
         const formData = {
             title: title,
             tags: tagList,

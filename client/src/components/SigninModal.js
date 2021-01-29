@@ -88,6 +88,9 @@ const SigninModal = (props) => {
             if(!err){
                 props.closeModal();
             }
+            else{
+                alert("error");
+            }
         })
     }
     const signInBody = (
