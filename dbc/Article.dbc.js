@@ -15,7 +15,7 @@ exports.addArticle = (req,callback)=>{
     if(content === undefined || content==='' || content.length <=4){
         return callback("Title is required (atleast 4 characters)");
     }
-    const preview = content.substring(0,150);
+    const preview = req.body.preview;
 
     const article = new Article({
         title: title,

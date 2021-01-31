@@ -6,8 +6,7 @@ import * as actions from '../actions';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from 'react-redux';
-import { useHistory } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1
     },
-    
+    link: {
+        textDecoration: 'none',
+        color: 'black'
+    }
    
 }));
 
@@ -41,8 +43,10 @@ const Navbar = (props) => {
     const handleSignOut = (e)=>{
         props.signout((err)=>{
             if(!err){
-                console.log('successfully signed out!');
+                alert('successfully signed out!');
             }
+
+          history.push('/');
         });
     }
     const [anchorEl, setAnchorEl] = useState(null);
@@ -77,19 +81,16 @@ const Navbar = (props) => {
           closeMenu();
           handleSignin();
       }
+
+      const closeModalMenu = ()=>{
+          closeMenu();
+      }
       const history = useHistory();
-      const gotoProfile = ()=>{
-          closeMenu();
-          history.push(`/user/${props.username}`);
-      }
-      const gotoPublish = ()=>{
-          closeMenu();
-          history.push('/publish');
-      }
       const loggedbody = (
         <div ref={menuRef}>
-            <MenuItem onClick={gotoProfile}>Profile</MenuItem>
-            <MenuItem onClick={gotoPublish}>Publish</MenuItem>
+            <MenuItem ><Link className={classes.link} onClick={closeModalMenu} to='/'>Home</Link></MenuItem>
+            <MenuItem ><Link className={classes.link} onClick={closeModalMenu} to={`/user/${props.username}`}>Profile</Link></MenuItem>
+            <MenuItem ><Link className={classes.link} onClick={closeModalMenu} to='/publish'>Publish</Link></MenuItem>
             <MenuItem onClick={handleMenuLogout}>Logout</MenuItem>
         </div>
     );

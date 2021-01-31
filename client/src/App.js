@@ -1,61 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Navbar from './components/Navbar';
-import ArticleList from './components/ArticleList';
-import axios from 'axios';
-import { URI } from './config';
+import HomePage from './components/HomePage';
+import ReadArticle from './components/ReadArticle';
+import PublishArticle from './components/PublishArticle';
+import UserProfile from './components/UserProfile';
+import { Route, Switch } from 'react-router-dom';
+import * as actions from './actions';
+import { connect } from 'react-redux';
 
-const useStyles = makeStyles((theme) => ({
-
-  hero: {
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.pexels.com/photos/6469/red-hands-woman-creative.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260')`,
-    height: "500px",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#fff",
-    fontSize: "3.6rem",
-
-  },
-  quote: {
-    textAlign: "center",
-    padding: "5px"
-  }
-}));
-
-const App = () => {
-  const classes = useStyles();
-  const [articles, getArticles] = useState([]);
-
-  useEffect(()=>{
-    axios.post(`${URI}/`,null,{headers: {'authorization': localStorage.getItem('token')}})
-      .then(res=>{
-        getArticles(res.data);
-      });
-  },[]);
+const App = (props) => {
 
   return (
     <div className="App">
 
       <Navbar />
 
-      <Box className={classes.hero}>
-        <Box className={classes.quote}>
-          Ideas are easy. <br />
-          Implementation is hard.
-        </Box>
-      </Box>
 
-
-      <ArticleList data={articles} />
+      <Switch>
+        {props.isLogged && <Route path='/user/:name' component={UserProfile} />}
+        {props.isLogged && <Route path='/publish' component={PublishArticle} />}
+        <Route path='/article/:id' component={ReadArticle} />
+        <Route path='/' component={HomePage} />
+      </Switch>
 
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state){
+
+  return {
+    isLogged: (state.auth.token !== '' && state.auth.token !== null)?true:false
+}
+
+}
+
+export default connect(mapStateToProps,actions)(App);

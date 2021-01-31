@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { URI } from '../config';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import { makeStyles } from '@material-ui/core';
  
 const ArticleContent = (props)=>{
 
@@ -12,7 +13,17 @@ const ArticleContent = (props)=>{
     );
 }
 
+const useStyles = makeStyles((theme)=>({
+
+    padding: {
+        padding: '5px 10%'
+    }
+
+}));
+
 const ReadArticle = (props)=>{
+
+    const classes = useStyles();
 
     const [data,setData] = useState('');
     const history = useHistory();
@@ -33,7 +44,8 @@ const ReadArticle = (props)=>{
 
     return (
 
-        <div>
+        
+        <div className={classes.padding}>
             <h1>{data.title}</h1>
             <ArticleContent content={data.content}/>
         </div>
