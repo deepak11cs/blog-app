@@ -35,6 +35,8 @@ const HomePage = (props) => {
     const classes = useStyles();
   const [articles, getArticles] = useState([]);
 
+  
+
   useEffect(() => {
     axios.post(`${URI}/`, null, { headers: { 'authorization': localStorage.getItem('token') } })
       .then(res => {

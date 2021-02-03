@@ -1,6 +1,8 @@
 import { Button, Card, CardActions, CardContent, Chip, makeStyles, Typography } from '@material-ui/core';
+import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { URI } from '../config';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -40,6 +42,7 @@ const ArticleCard = (props) => {
             </CardContent>
             <CardActions>
                 <Button size="small"><Link to={`/article/${props.data._id}`}>Read More</Link></Button>
+                {props.controls && <Button statekey={props.statekey} datakey={props.datakey} size="small" onClick={props.update}>Delete</Button>}
             </CardActions>
         </Card>
     );

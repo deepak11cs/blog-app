@@ -18,10 +18,31 @@ const UserProfile = (props)=>{
             });
     },[]);
     
+    const updateArticles = (e)=>{
+        let index = e.currentTarget.getAttribute('statekey');
+        let newUser = {...user};
+        let articleid = e.currentTarget.getAttribute('datakey');
+        console.log(e.currentTarget);
+        console.log(index,e.target.getAttribute('key'));
+        axios.post(`${URI}/deletearticle/${articleid}`, null, { headers: { 'authorization': localStorage.getItem('token') } })
+        .then(res=>{
+            if(res){
+                console.log('article removed successfully');
+                if(index!==-1 && index){
+                    newUser.articles.splice(index,1);
+                    setUser(newUser);
+                }
+            
+            }
+            
+        });
+        
+      }
+
     return (
         <>
             <div>{props.match.params.name}</div>
-            <ArticleList data={user.articles}/>
+            <ArticleList controls="true" update={updateArticles} data={user.articles}/>
         </>
     );
 }

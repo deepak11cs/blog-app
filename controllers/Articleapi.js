@@ -11,6 +11,14 @@ exports.publish = function(req,res, next){
     });
 }
 
+exports.removeArticle = function(req,res,next){
+    dbcArticle.deleteArticle(req,(err,data)=>{
+        if(err)
+            return next(err);
+        return res.send(data);
+    });
+}
+
 exports.getArticle = function(req,res,next){
 
     dbcArticle.getArticle(req,(err,data)=>{

@@ -19,11 +19,11 @@ const ArticleList = (props) => {
     const classes = useStyles();
     let body;
     if(props.data && props.data.length>0){
-        body = props.data.map(ele=>{
+        body = props.data.map((ele,index)=>{
 
             return (
                 <Grid item xs={12} sm={6} md={4}>
-                    <ArticleCard data={ele}/>
+                    <ArticleCard datakey={ele._id} statekey={index} update={props.update} controls={props.controls} data={ele}/>
                 </Grid>
             )
 
