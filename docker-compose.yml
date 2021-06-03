@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    image: img-blog-server
+    container_name: blog-server
+    command: npm start
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3090:3090"
+    env_file: ./server/.env
+    networks:
+      - app-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    image: img-blog-client
+    container_name: blog-client
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local
